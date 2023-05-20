@@ -1,9 +1,9 @@
 import express from 'express'
 import {graphqlHTTP} from 'express-graphql'
 import cors from 'cors'
-import {DataSource} from 'typeorm'
+import {DataSource} from 'typeorm' //used to establish conection to mysql databae
 import { schema } from './Schema'
-import { Users } from './Mysql_Entities/TableUsers'
+import { Users } from './Mysql_Entities/TableUsers' //table in the database called Users
 
 const main = async() =>{
 
@@ -31,6 +31,7 @@ const main = async() =>{
     const app = express()
     app.use(cors())
     app.use(express.json())
+
     app.use('/graphql', graphqlHTTP({
         schema,
         graphiql:true
