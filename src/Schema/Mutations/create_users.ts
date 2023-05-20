@@ -1,4 +1,4 @@
-import { UserType } from "../Db_table_TypeDefs/User";
+import { UserType } from "../Db_table_TypeDefs/UserTableDef";
 import {GraphQLString} from 'graphql'
 import { Users } from "../../Mysql_Entities/TableUsers";
 
