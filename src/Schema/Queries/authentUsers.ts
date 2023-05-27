@@ -26,7 +26,7 @@ export const AUTHENTICATE_USER = {
       return {
         success: true,
         failure: false,
-        message: 'Authentication successful',
+        Messages: 'Authentication successful',
         token,
       };
     },
