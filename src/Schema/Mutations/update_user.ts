@@ -1,39 +1,47 @@
+import { GraphQLString, GraphQLNonNull, GraphQLID } from 'graphql';
 import { UserType } from "../Db_table_TypeDefs/UserTableDef";
-import { GraphQLString, GraphQLID } from 'graphql'
 import { Users } from "../../Mysql_Entities/TableUsers";
-
-
+import { Messages } from "../Db_table_TypeDefs/Mesaages";
+import { hashPassword } from "../../auth";
 
 export const UPDATE_USER = {
-  type: UserType,
+  type: Messages,
   args: {
-    id: { type: GraphQLID },
+    id: { type: new GraphQLNonNull(GraphQLID) },
     name: { type: GraphQLString },
     username: { type: GraphQLString },
     password: { type: GraphQLString },
+    passwordtwo: { type: GraphQLString },
   },
+  
   async resolve(parent: any, args: any) {
-    const { id, name, username, password } = args;
+    const { id, name, username, password, passwordtwo } = args;
 
-    // Find the user by ID
-    const user = await Users.findOne({ where: { id } });
+    try {
+      // Find the user by ID
+      const user = await Users.findOne({ where: { id } });
 
-    if (!user) {
-    //   if user does not exist create one at  that index
-      await Users.insert({id, name, username, password})
+      if (!user) {
+        throw new Error("User does not exist");
+      }
 
-    }else{
+      // Update the user with the provided fields
+      if (name) user.name = name;
+      if (username) user.username = username;
 
-        // Update the user
-        user.name = name;
-        user.username = username;
-        user.password = password;
-        await user.save();
+      // Hash the passwords if provided
+      if (password) user.password = await hashPassword(password);
+      if (passwordtwo) user.passwordtwo = await hashPassword(passwordtwo);
 
+      // Save the changes to the user entity
+      await user.save();
+
+      // Return a success message
+      return { success: true, Messages: `User with ID ${id} updated successfully` };
+
+    } catch (error:any) {
+      // Return an error message
+      return { success: false, Messages: `Failed to update user with ID ${id}: ${error.message}` };
     }
-
-    
-
-    return user;
-  }
+  },
 };
