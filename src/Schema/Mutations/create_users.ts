@@ -8,11 +8,12 @@ export const CREATE_USER = {
   args: {
     name: { type: GraphQLString },
     username: { type: GraphQLString },
+    email:{type: GraphQLString},
     password: { type: GraphQLString },
     passwordtwo: { type: GraphQLString },
   },
   async resolve(parent: any, args: any) {
-    const { name, username, password, passwordtwo } = args;
+    const { name, username, email, password, passwordtwo } = args;
 
     try {
       // Hash the passwords
@@ -23,6 +24,7 @@ export const CREATE_USER = {
       await Users.insert({
         name,
         username,
+        email,
         password: hashedPassword,
         passwordtwo: hashedPasswordTwo,
       });

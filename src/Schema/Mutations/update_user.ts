@@ -1,5 +1,4 @@
 import { GraphQLString, GraphQLNonNull, GraphQLID } from 'graphql';
-import { UserType } from "../Db_table_TypeDefs/UserTableDef";
 import { Users } from "../../Mysql_Entities/TableUsers";
 import { Messages } from "../Db_table_TypeDefs/Mesaages";
 import { hashPassword } from "../../auth";
@@ -10,12 +9,13 @@ export const UPDATE_USER = {
     id: { type: new GraphQLNonNull(GraphQLID) },
     name: { type: GraphQLString },
     username: { type: GraphQLString },
+    email: { type:GraphQLString },
     password: { type: GraphQLString },
     passwordtwo: { type: GraphQLString },
   },
   
   async resolve(parent: any, args: any) {
-    const { id, name, username, password, passwordtwo } = args;
+    const { id, name, username, email, password, passwordtwo } = args;
 
     try {
       // Find the user by ID
@@ -28,6 +28,7 @@ export const UPDATE_USER = {
       // Update the user with the provided fields
       if (name) user.name = name;
       if (username) user.username = username;
+      if (email) user.email = email;
 
       // Hash the passwords if provided
       if (password) user.password = await hashPassword(password);
