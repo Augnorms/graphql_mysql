@@ -5,6 +5,7 @@ import { DELETE_USER } from './Mutations/delete_user';
 import { UPDATE_USER } from './Mutations/update_user';
 import { GET_USER_BY_ID } from './Queries/get_user_by_id';
 import {AUTHENTICATE_USER} from './Queries/authentUsers'
+import { RESET_PASSWORD } from './Mutations/reset_password';
 
 
 const RootQuery = new GraphQLObjectType({
@@ -21,7 +22,8 @@ const RootQuery = new GraphQLObjectType({
       createUser: CREATE_USER,
       deleteUser: DELETE_USER,
       updateUser: UPDATE_USER,
-      authenticateUser:AUTHENTICATE_USER
+      authenticateUser:AUTHENTICATE_USER,
+      resetPassword:RESET_PASSWORD 
     },
   });
   

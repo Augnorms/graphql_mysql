@@ -18,5 +18,7 @@ export class Users extends BaseEntity{
     password!: string;
 
     @Column()
-    passwordtwo!: string
+    passwordtwo!: string;
+
+      
 }
