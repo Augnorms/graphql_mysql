@@ -7,11 +7,13 @@ export const UPDATE_TODO = {
     args:{
       id:{type:new GraphQLNonNull(GraphQLID)},
       name:{type:GraphQLString},
-      time:{type:GraphQLString}
+      starttime:{type:GraphQLString},
+      endtime:{type:GraphQLString},
+      date:{type:GraphQLString}
     },
     async resolve(parent:any, args:any){
 
-        const {id, name, time} = args
+        const {id, name, starttime, endtime, date} = args
 
         try{
 
@@ -20,7 +22,9 @@ export const UPDATE_TODO = {
             if(!todo)return{messages:"no todo available"}
 
             if(name) todo.name = name
-            if(time) todo.time = time
+            if(starttime) todo.starttime = starttime
+            if(endtime) todo.endtime = endtime
+            if(date) todo.date = date
 
             await todo.save()
 

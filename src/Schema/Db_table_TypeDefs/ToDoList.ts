@@ -5,6 +5,8 @@ export const ListType = new GraphQLObjectType({
     fields:()=>({
         id:{type:GraphQLID},
         name:{type:GraphQLString},
-        time:{type:GraphQLString}
+        starttime:{type:GraphQLString},
+        endtime:{type:GraphQLString},
+        date:{type:GraphQLString}
     })
 })

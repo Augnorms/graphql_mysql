@@ -6,16 +6,20 @@ export const CREATE_TODO = {
     type:todoMessages,
     args:{
         name:{type:GraphQLString},
-        time:{type:GraphQLString}
-    },
+        starttime:{type:GraphQLString},
+        endtime:{type:GraphQLString},
+        date:{type:GraphQLString}
+     },
     async resolve(parent:any, args:any){
-        const {name, time} = args
+        const {name, starttime, endtime, date} = args
 
         try{
 
             await Todo.insert({
                 name,
-                time
+                starttime,
+                endtime,
+                date
             })
 
             return{success:true, messages:'todo created successfully'}

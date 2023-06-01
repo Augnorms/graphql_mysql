@@ -7,5 +7,9 @@ export class Todo extends BaseEntity{
     @Column()
       name!: string
     @Column()
-      time!:string    
+      starttime!:string
+    @Column()
+      endtime!:string  
+    @Column()
+      date!:string      
 }
