@@ -4,6 +4,7 @@ import cors from 'cors'
 import {DataSource} from 'typeorm' //used to establish conection to mysql databae
 import { schema } from './Schema'
 import { Users } from './Mysql_Entities/TableUsers' //table in the database called Users
+import {Todo} from './Mysql_Entities/TableForToDo'
 
 
 
@@ -19,7 +20,7 @@ const main = async() =>{
         database: "graphql",
         logging:true,
         synchronize:false,      // set this to true to sync to the database then set back to false
-        entities: [Users]      //after creating some entities import and initialize here
+        entities: [Todo]      //after creating some entities import and initialize here
     })
 
     AppDataSource.initialize()

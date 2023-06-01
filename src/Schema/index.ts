@@ -7,12 +7,19 @@ import { GET_USER_BY_ID } from './Queries/get_user_by_id';
 import {AUTHENTICATE_USER} from './Queries/authentUsers'
 import { RESET_PASSWORD } from './Mutations/reset_password';
 
+import { CREATE_TODO } from './ToDoMutation/create_todo';
+import { UPDATE_TODO } from './ToDoMutation/update_todo';
+import { DELETE_TODO } from './ToDoMutation/delete_todo';
+import { GET_ALL_TODOS } from './ToDoQueries/get_all_todolists';
+
 
 const RootQuery = new GraphQLObjectType({
     name: 'RootQuery',
     fields: {
       getAllUsers: GET_ALL_USERS,
       getUserById: GET_USER_BY_ID,
+
+      get_all_todos:GET_ALL_TODOS
     },
   });
   
@@ -23,7 +30,11 @@ const RootQuery = new GraphQLObjectType({
       deleteUser: DELETE_USER,
       updateUser: UPDATE_USER,
       authenticateUser:AUTHENTICATE_USER,
-      resetPassword:RESET_PASSWORD 
+      resetPassword:RESET_PASSWORD, 
+
+      createTodo:CREATE_TODO,
+      updateTodo:UPDATE_TODO,
+      deleteTodo:DELETE_TODO
     },
   });
   
