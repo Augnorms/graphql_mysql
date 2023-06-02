@@ -11,6 +11,7 @@ import { CREATE_TODO } from './ToDoMutation/create_todo';
 import { UPDATE_TODO } from './ToDoMutation/update_todo';
 import { DELETE_TODO } from './ToDoMutation/delete_todo';
 import { GET_ALL_TODOS } from './ToDoQueries/get_all_todolists';
+import { GET_TODO_BY_ID } from './ToDoQueries/get_todo_by_id';
 
 
 const RootQuery = new GraphQLObjectType({
@@ -19,7 +20,8 @@ const RootQuery = new GraphQLObjectType({
       getAllUsers: GET_ALL_USERS,
       getUserById: GET_USER_BY_ID,
 
-      get_all_todos:GET_ALL_TODOS
+      get_all_todos:GET_ALL_TODOS,
+      getTodoById:GET_TODO_BY_ID
     },
   });
   
