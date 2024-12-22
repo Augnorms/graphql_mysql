@@ -47,14 +47,16 @@ const main = async() =>{
 /* -------------------------------------------- */   
    
 
-   //this handles the graphql routes
-    app.use('/graphql', graphqlHTTP({
+   //this handles the graphql routes graph studio
+    app.use('/graphiql', graphqlHTTP({
         schema,
         graphiql:true,
     })) 
 
-    //using apolloserver
-      app.use('/graphql', expressMiddleware(server, { context: async ({ req }) => ({ req }) }));
+    //using apolloserver to handle graphql routes
+    app.use('/apolloserver', expressMiddleware(server, { 
+        context: async ({ req }) => ({ req }) 
+    }));
 
 
     //this handles handles the graphql connection server

@@ -4,7 +4,7 @@ import { Todo } from "../../Mysql_Entities/TableForToDo";
 
 
 export const GET_ALL_TODOS = {
-    type:GraphQLList(ListType),
+    type:new GraphQLList(ListType),
     async resolve():Promise<Todo[]>{
       return await Todo.find()
     }
