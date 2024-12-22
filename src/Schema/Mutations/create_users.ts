@@ -12,10 +12,13 @@ export const CREATE_USER = {
     password: { type: GraphQLString },
     passwordtwo: { type: GraphQLString },
   },
-  async resolve(_parent: any, args: any) {
-    const { name, username, email, password, passwordtwo } = args;
+  async resolve(_parent: any, args: any, context: any) {
 
     try {
+
+      if(context.token) throw new Error("unathorized: not authorised to access this endpoint")
+
+      const { name, username, email, password, passwordtwo } = args;
       // Check if the email already exists
       const existingUser = await Users.findOne({ where: { email } });
 
@@ -39,12 +42,9 @@ export const CREATE_USER = {
         passwordtwo: hashedPasswordTwo,
       });
 
-      let finalData = await Users.findOne({ where: { email } });
-
       return {
         success: true,
         Messages: `User with the name ${name} created successfully.`,
-        data: finalData
       };
 
     } catch (error: any) {

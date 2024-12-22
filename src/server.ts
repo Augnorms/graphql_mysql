@@ -44,25 +44,39 @@ const main = async() =>{
      const server = new ApolloServer({ schema });
      await server.start();
 
-/* -------------------------------------------- */   
-   
+/* -------------------------------------------- */  
+
+    const authenticateToken = (req: any) => {
+        const authHeader = req.headers.authorization;
+        return authHeader;
+    }
 
    //this handles the graphql routes graph studio
-    app.use('/graphiql', graphqlHTTP({
-        schema,
-        graphiql:true,
-    })) 
+  app.use('/graphiql', graphqlHTTP((req, res) => {
+    
+        const token = authenticateToken(req); // Authenticate for GraphiQL
+    
+        return {
+          schema,
+          graphiql: true,
+          context: { token }, // Pass authenticated user to resolvers
+        };
+    })
+  );
 
     //using apolloserver to handle graphql routes
-    app.use('/apolloserver', expressMiddleware(server, { 
-        context: async ({ req }) => ({ req }) 
-    }));
-
+  app.use('/apolloserver', expressMiddleware(server, {
+      context: async ({ req }) => {
+        const token = authenticateToken(req); // Authenticate for Apollo
+        return { token }; // Pass authenticated user to resolvers
+      },
+    })
+  );
 
     //this handles handles the graphql connection server
-    app.listen(3002, ()=>{
+  app.listen(3002, ()=>{
         console.log("Server is running on port 3002")
-    })
+  })
 }
 
 main().catch((err)=>console.log(err))
