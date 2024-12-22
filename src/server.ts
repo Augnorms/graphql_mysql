@@ -1,5 +1,7 @@
 import express from 'express'
 import {graphqlHTTP} from 'express-graphql'
+import { ApolloServer } from '@apollo/server';
+import { expressMiddleware } from '@apollo/server/express4';
 import cors from 'cors'
 import {DataSource} from 'typeorm' //used to establish conection to mysql databae
 import { schema } from './Schema'
@@ -16,12 +18,13 @@ const main = async() =>{
         host: "localhost",
         port: 3306,
         username: "root",
-        password: "Password@1",
+        password: "Microvelli@027",
         database: "graphql",
         logging:true,
         synchronize:false,      // set this to true to sync to the database then set back to false
         entities: [Users, Todo]      //after creating some entities import and initialize here
     })
+
 
     AppDataSource.initialize()
     .then(() => {
@@ -37,6 +40,10 @@ const main = async() =>{
     app.use(cors())
     app.use(express.json())
 
+     // Apollo Server setup
+     const server = new ApolloServer({ schema });
+     await server.start();
+
 /* -------------------------------------------- */   
    
 
@@ -45,6 +52,9 @@ const main = async() =>{
         schema,
         graphiql:true,
     })) 
+
+    //using apolloserver
+      app.use('/graphql', expressMiddleware(server, { context: async ({ req }) => ({ req }) }));
 
 
     //this handles handles the graphql connection server
