@@ -19,21 +19,19 @@ const RootQuery = new GraphQLObjectType({
     fields: {
       getAllUsers: GET_ALL_USERS,
       getUserById: GET_USER_BY_ID,
-
       get_all_todos:GET_ALL_TODOS,
       getTodoById:GET_TODO_BY_ID
     },
   });
   
-  const Mutation = new GraphQLObjectType({
-    name: 'Mutation',
+  const RootMutation = new GraphQLObjectType({
+    name: 'RootMutation',
     fields: {
       createUser: CREATE_USER,
       deleteUser: DELETE_USER,
       updateUser: UPDATE_USER,
       authenticateUser:AUTHENTICATE_USER,
       resetPassword:RESET_PASSWORD, 
-
       createTodo:CREATE_TODO,
       updateTodo:UPDATE_TODO,
       deleteTodo:DELETE_TODO
@@ -43,5 +41,5 @@ const RootQuery = new GraphQLObjectType({
   
   export const schema = new GraphQLSchema({
     query: RootQuery,
-    mutation: Mutation,
+    mutation: RootMutation,
   });

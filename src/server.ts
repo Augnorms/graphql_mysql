@@ -7,7 +7,7 @@ import {DataSource} from 'typeorm' //used to establish conection to mysql databa
 import { schema } from './Schema'
 import { Users } from './Mysql_Entities/TableUsers' //table in the database called Users
 import {Todo} from './Mysql_Entities/TableForToDo' //table in the database called Todo
-
+import { Request } from 'express-serve-static-core';
 
 
 const main = async() =>{
@@ -46,14 +46,15 @@ const main = async() =>{
 
 /* -------------------------------------------- */  
 
-    const authenticateToken = (req: any) => {
-        const authHeader = req.headers.authorization;
-        return authHeader;
-    }
+const authenticateToken = (req: Request) => {
+  const authHeader = req.headers.authorization
+  return authHeader;
+};
+
 
    //this handles the graphql routes graph studio
-  app.use('/graphiql', graphqlHTTP((req, res) => {
-    
+  app.use('/graphiql', graphqlHTTP((req: any) => {
+
         const token = authenticateToken(req); // Authenticate for GraphiQL
     
         return {
